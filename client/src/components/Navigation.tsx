@@ -1,10 +1,13 @@
 import React, { useCallback, useState } from 'react';
+import injectedModule from '@web3-onboard/injected-wallets'
 import Onboard, { WalletState } from '@web3-onboard/core'
 
 import SendTransaction from './SendTransaction';
 
+const injected = injectedModule()
+
 const onboard = Onboard({
-  wallets: [],
+  wallets: [injected],
   chains: [
     {
       id: '123456',
