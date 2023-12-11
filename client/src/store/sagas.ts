@@ -26,7 +26,7 @@ function* sendTransaction() {
 
   const transaction = {
     to: randomAddress(),
-    value: 1000000000000000000,
+    value: "1000000000000000000",
   };
 
   try {
