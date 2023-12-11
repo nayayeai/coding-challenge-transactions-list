@@ -4,6 +4,7 @@ import { JsonRpcProvider, Transaction, TransactionResponse, TransactionReceipt, 
 import apolloClient from '../apollo/client';
 import { Actions } from '../types';
 import { SaveTransaction } from '../queries';
+import { navigate } from '../components/NaiveRouter';
 
 function* sendTransaction() {
   const provider = new JsonRpcProvider('http://localhost:8545');
@@ -53,6 +54,9 @@ function* sendTransaction() {
       mutation: SaveTransaction,
       variables,
     });
+
+    // Navigate to the transaction details page
+    navigate('/transaction/' + receipt.hash);
 
   } catch (error) {
     //
