@@ -26,6 +26,7 @@ function* sendTransaction() {
 
   const transaction = {
     to: randomAddress(),
+    // Using string, because max safe integer is 9007199254740991
     value: "1000000000000000000",
   };
 
