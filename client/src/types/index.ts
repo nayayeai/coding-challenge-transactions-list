@@ -24,4 +24,13 @@ export type Action<P> = {
 
 export enum Actions {
   SendTransaction = 'SEND_TRANSACTION',
+  ToggleSendModal = 'TOGGLE_SEND_MODAL',
 };
+
+export interface ISendTransactionAction {
+  type: typeof Actions.SendTransaction;
+  payload: {
+    recipient: string;
+    amount: string;
+  };
+}

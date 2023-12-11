@@ -35,7 +35,7 @@ const Navigation: React.FC = () => {
     <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-ful text-sm py-4 bg-gray-800">
       <nav className="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between">
         <div className="flex items-center justify-between">
-          <a className="flex-none text-xl font-semibold text-white" href=".">Transactions List</a>
+          <a className="flex-none text-xl font-semibold text-white" href="/">Transactions List</a>
         </div>
         <div className="hs-collapse mt-4 overflow-hidden transition-all duration-300 basis-full grow block sm:mt-0">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5">

@@ -1,13 +1,15 @@
-import { takeEvery } from 'redux-saga/effects';
-import { JsonRpcProvider, Transaction, TransactionResponse, TransactionReceipt, BrowserProvider, Signer } from 'ethers';
+import { takeEvery, put } from 'redux-saga/effects';
+import { Transaction, TransactionResponse, TransactionReceipt, BrowserProvider, Signer } from 'ethers';
 
 import apolloClient from '../apollo/client';
-import { Actions } from '../types';
+import { Actions, ISendTransactionAction } from '../types';
 import { SaveTransaction } from '../queries';
 import { navigate } from '../components/NaiveRouter';
+import { parseUnits } from "ethers";
 
-function* sendTransaction() {
-  const provider = new JsonRpcProvider('http://localhost:8545');
+function* sendTransaction(action: ISendTransactionAction) {
+  const { recipient, amount } = action.payload;
+  const amountInWei = parseUnits(amount, "ether");
 
   // this could have been passed along in a more elegant fashion,
   // but for the purpouses of this scenario it's good enough
@@ -16,19 +18,9 @@ function* sendTransaction() {
 
   const signer: Signer = yield walletProvider.getSigner();
 
-  const accounts: Array<{ address: string }> = yield provider.listAccounts();
-
-  const randomAddress = () => {
-    const min = 1;
-    const max = 19;
-    const random = Math.round(Math.random() * (max - min) + min);
-    return accounts[random].address;
-  };
-
   const transaction = {
-    to: randomAddress(),
-    // Using string, because max safe integer is 9007199254740991
-    value: "1000000000000000000",
+    to: recipient,
+    value: amountInWei,
   };
 
   try {
@@ -54,6 +46,9 @@ function* sendTransaction() {
       mutation: SaveTransaction,
       variables,
     });
+
+    // Close the modal
+    yield put({ type: Actions.ToggleSendModal, payload: false });
 
     // Navigate to the transaction details page
     navigate('/transaction/' + receipt.hash);
